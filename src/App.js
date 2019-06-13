@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { DogList } from "./components/DogList";
+import { SearchBox } from "./components/SearchBox";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    dogs: [
+      { name: "Max", breed: "unknown" },
+      { name: "Charlie", breed: "unknown" },
+      { name: "Cooper", breed: "unknown" },
+      { name: "Buddy", breed: "unknown" },
+      { name: "Jack", breed: "unknown" },
+      { name: "Oliver", breed: "unknown" },
+      { name: "Bear", breed: "unknown" },
+      { name: "Rocky", breed: "unknown" },
+      { name: "Duke", breed: "unknown" },
+      { name: "Tucker", breed: "unknown" },
+      { name: "Bella", breed: "unknown" },
+      { name: "Lucy", breed: "unknown" }
+    ],
+    searchDog: ""
+  };
+
+handleInput=e=>{
+    e.preventDefault()
+    this.setState({searchDog:e.target.value})
+    
+}
+
+  render() {
+      
+      let filteredDogs=this.state.dogs.filter(dog=>{
+          return dog.name.toLowerCase().includes(this.state.searchDog.toLowerCase())
+      })
+    return (
+      <div>
+        <h1>Just a list of Dogs</h1>
+        <SearchBox handleInput={this.handleInput}/>
+        <DogList filteredDogs={filteredDogs} />
+      </div>
+    );
+  }
 }
 
 export default App;
